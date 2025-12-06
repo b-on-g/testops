@@ -1,0 +1,31 @@
+$bog_testops_app_validator $mol_page
+	title @ \Валидатор стандартов
+	tools /
+		<= Validate_btn $mol_button_major
+			click? <=> validate? null
+			sub /
+				<= validate_label @ \Проверить все
+	body /
+		<= Intro $mol_view
+			sub /
+				<= intro_text @ \Проверка тест-кейсов на соответствие стандартам Allure и паттерну AAA
+		<= InputCard $mol_card
+			title @ \Проверить конкретный тест-кейс
+			content /
+				<= CodeInput $mol_textarea
+					hint @ \Вставьте код тест-кейса для проверки...
+					value? <=> code_input? \
+				<= ValidateOne_btn $mol_button_major
+					click? <=> validate_one? null
+					sub /
+						<= validate_one_label @ \Проверить
+		<= ResultsCard $mol_card
+			title @ \Результаты валидации
+			content /
+				<= Results_text $mol_text
+					text <= validation_report \
+		<= AllTestsCard $mol_card
+			title @ \Валидация всех тест-кейсов
+			content /
+				<= AllResults_text $mol_text
+					text <= all_validation_report \

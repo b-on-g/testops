@@ -1,0 +1,17 @@
+{
+	"$bog_testops_app_generator_generate_label": "Генерировать",
+	"$bog_testops_app_generator_Product_field_name": "Продукт",
+	"$bog_testops_app_generator_TestType_field_name": "Тип теста",
+	"$bog_testops_app_generator_Priority_field_name": "Приоритет",
+	"$bog_testops_app_generator_Requirements_hint": "Опишите функционал для тестирования...",
+	"$bog_testops_app_generator_Requirements_field_name": "Требования / Описание функциональности",
+	"$bog_testops_app_generator_ApiSpec_hint": "Вставьте OpenAPI спецификацию в формате JSON или YAML...",
+	"$bog_testops_app_generator_ApiSpec_field_name": "OpenAPI спецификация (для API тестов)",
+	"$bog_testops_app_generator_BaseUrl_hint": "https://example.com",
+	"$bog_testops_app_generator_BaseUrl_field_name": "URL продукта",
+	"$bog_testops_app_generator_Manual_code_card_title": "Ручной тест-кейс",
+	"$bog_testops_app_generator_Automated_code_card_title": "Автоматизированный тест",
+	"$bog_testops_app_generator_save_label": "Сохранить в библиотеку",
+	"$bog_testops_app_generator_regenerate_label": "Перегенерировать",
+	"$bog_testops_app_generator_title": "Генератор тест-кейсов"
+}

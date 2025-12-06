@@ -1,0 +1,10 @@
+{
+	"$bog_testops_app_validator_validate_label": "Проверить все",
+	"$bog_testops_app_validator_intro_text": "Проверка тест-кейсов на соответствие стандартам Allure и паттерну AAA",
+	"$bog_testops_app_validator_CodeInput_hint": "Вставьте код тест-кейса для проверки...",
+	"$bog_testops_app_validator_validate_one_label": "Проверить",
+	"$bog_testops_app_validator_InputCard_title": "Проверить конкретный тест-кейс",
+	"$bog_testops_app_validator_ResultsCard_title": "Результаты валидации",
+	"$bog_testops_app_validator_AllTestsCard_title": "Валидация всех тест-кейсов",
+	"$bog_testops_app_validator_title": "Валидатор стандартов"
+}

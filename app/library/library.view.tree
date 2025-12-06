@@ -1,0 +1,83 @@
+$bog_testops_app_library $mol_page
+	title @ \Библиотека тест-кейсов
+	tools /
+		<= Stats $mol_view
+			sub /
+				<= stats_text \
+	body /
+		<= Filters $mol_row
+			sub /
+				<= Search $mol_string
+					hint @ \Поиск по названию, фиче, тегам...
+					value? <=> search? \
+				<= TypeFilter $mol_select
+					hint @ \Тип теста
+					options <= type_options /
+						\
+						\manual
+						\ui
+						\api
+						\unit
+					value? <=> type_filter? \
+				<= PriorityFilter $mol_select
+					hint @ \Приоритет
+					options /
+						\
+						\CRITICAL
+						\NORMAL
+						\LOW
+					value? <=> priority_filter? \
+				<= StatusFilter $mol_select
+					hint @ \Статус
+					options /
+						\
+						\draft
+						\ready
+						\automated
+						\deprecated
+					value? <=> status_filter? \
+				<= ResetFilters $mol_button_minor
+					click? <=> filters_reset? null
+					sub /
+						<= reset_label @ \Сбросить
+		<= TableCard $mol_card
+			content /
+				<= Table $mol_list
+					rows <= testcase_rows /
+				<= Pagination $mol_row
+					sub /
+						<= PageInfo \
+						<= PrevPage $mol_button_minor
+							enabled <= page_has_prev false
+							click? <=> page_prev? null
+							sub /
+								<= prev_label @ \Назад
+						<= NextPage $mol_button_minor
+							enabled <= page_has_next false
+							click? <=> page_next? null
+							sub /
+								<= next_label @ \Вперёд
+
+$bog_testops_app_library_row $mol_row
+	attr *
+		mol_theme \bog_testops_row
+	sub /
+		<= Title $mol_link
+			arg * testcase <= testcase_id \
+			sub /
+				<= title_text \
+		<= Feature \
+		<= Priority \
+		<= TestType \
+		<= Status \
+		<= UpdatedAt \
+		<= Actions $mol_row
+			sub /
+				<= View_btn $mol_button_minor
+					click? <=> view? null
+					sub /
+						<= view_label @ \Просмотр
+				<= Delete_btn $mol_button_minor
+					click? <=> delete? null
+					sub /
+						<= delete_label @ \Удалить

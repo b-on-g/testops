@@ -1,0 +1,70 @@
+$bog_testops_app_settings $mol_page
+	title @ \Настройки
+	body /
+		<= ApiCard $mol_card
+			title @ \Cloud.ru Evolution API
+			content /
+				<= ApiKey_field $mol_form_field
+					name @ \API Ключ
+					content /
+						<= ApiKey $mol_string
+							hint @ \Введите API ключ Cloud.ru Evolution
+							value? <=> api_key? \
+				<= ApiModel_field $mol_form_field
+					name @ \Модель
+					content /
+						<= ApiModel $mol_select
+							hint @ \Выберите модель
+							value? <=> api_model? \claude-3-5-sonnet
+							options /
+								\claude-3-5-sonnet
+								\gpt-4
+								\gpt-4-turbo
+				<= ApiTest_btn $mol_button_minor
+					click? <=> api_test? null
+					sub /
+						<= api_test_label @ \Проверить подключение
+		<= GitlabCard $mol_card
+			title @ \GitLab интеграция
+			content /
+				<= GitlabToken_field $mol_form_field
+					name @ \Personal Access Token
+					content /
+						<= GitlabToken $mol_string
+							hint @ \GitLab PAT с правами api
+							value? <=> gitlab_token? \
+				<= GitlabUrl_field $mol_form_field
+					name @ \GitLab URL
+					content /
+						<= GitlabUrl $mol_string
+							hint @ \https://gitlab.com
+							value? <=> gitlab_url? \
+				<= GitlabProject_field $mol_form_field
+					name @ \Project ID
+					content /
+						<= GitlabProject $mol_string
+							hint @ \12345
+							value? <=> gitlab_project? \
+				<= GitlabTest_btn $mol_button_minor
+					click? <=> gitlab_test? null
+					sub /
+						<= gitlab_test_label @ \Проверить подключение
+		<= AllureCard $mol_card
+			title @ \Настройки Allure
+			content /
+				<= AllureOwner_field $mol_form_field
+					name @ \Владелец по умолчанию
+					content /
+						<= AllureOwner $mol_string
+							hint @ \qa-team
+							value? <=> allure_owner? \qa-team
+		<= SaveRow $mol_row
+			sub /
+				<= Save_btn $mol_button_major
+					click? <=> save? null
+					sub /
+						<= save_label @ \Сохранить настройки
+				<= Reset_btn $mol_button_minor
+					click? <=> reset? null
+					sub /
+						<= reset_label @ \Сбросить

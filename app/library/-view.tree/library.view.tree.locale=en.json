@@ -1,0 +1,12 @@
+{
+	"$bog_testops_app_library_Search_hint": "Поиск по названию, фиче, тегам...",
+	"$bog_testops_app_library_TypeFilter_hint": "Тип теста",
+	"$bog_testops_app_library_PriorityFilter_hint": "Приоритет",
+	"$bog_testops_app_library_StatusFilter_hint": "Статус",
+	"$bog_testops_app_library_reset_label": "Сбросить",
+	"$bog_testops_app_library_prev_label": "Назад",
+	"$bog_testops_app_library_next_label": "Вперёд",
+	"$bog_testops_app_library_title": "Библиотека тест-кейсов",
+	"$bog_testops_app_library_row_view_label": "Просмотр",
+	"$bog_testops_app_library_row_delete_label": "Удалить"
+}

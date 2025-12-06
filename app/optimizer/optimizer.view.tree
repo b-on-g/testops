@@ -1,0 +1,36 @@
+$bog_testops_app_optimizer $mol_page
+	title @ \Оптимизатор тестов
+	tools /
+		<= Analyze_btn $mol_button_major
+			click? <=> analyze? null
+			sub /
+				<= analyze_label @ \Анализировать
+	body /
+		<= Intro $mol_view
+			sub /
+				<= intro_text @ \Анализ покрытия, поиск дубликатов и пробелов в тестировании
+		<= ResultsCard $mol_deck
+			items /
+				<= Coverage_card $mol_card
+					title @ \Покрытие
+					content /
+						<= Coverage_text $mol_text
+							text <= coverage_report \
+				<= Duplicates_card $mol_card
+					title @ \Дубликаты
+					content /
+						<= Duplicates_text $mol_text
+							text <= duplicates_report \
+				<= Gaps_card $mol_card
+					title @ \Пробелы
+					content /
+						<= Gaps_text $mol_text
+							text <= gaps_report \
+				<= Suggestions_card $mol_card
+					title @ \Рекомендации
+					content /
+						<= Suggestions_text $mol_text
+							text <= suggestions_report \
+		<= LoadingIndicator $mol_view
+			sub /
+				<= loading_text @ \Анализ выполняется...

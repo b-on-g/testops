@@ -1,0 +1,81 @@
+$bog_testops_app_generator $mol_page
+	title @ \Генератор тест-кейсов
+	tools /
+		<= Generate_btn $mol_button_major
+			enabled <= can_generate true
+			click? <=> generate? null
+			sub /
+				<= generate_label @ \Генерировать
+	body /
+		<= Form $mol_form
+			form_fields /
+				<= Product_field $mol_form_field
+					name @ \Продукт
+					content /
+						<= Product $mol_select
+							value? <=> product? \
+							options <= product_options /
+								\
+								\compute
+								\calculator
+								\storage
+								\kubernetes
+				<= TestType_field $mol_form_field
+					name @ \Тип теста
+					content /
+						<= TestType $mol_select
+							value? <=> test_type? \manual
+							options /
+								\manual
+								\ui
+								\api
+								\unit
+				<= Priority_field $mol_form_field
+					name @ \Приоритет
+					content /
+						<= Priority $mol_select
+							value? <=> priority? \NORMAL
+							options /
+								\CRITICAL
+								\NORMAL
+								\LOW
+				<= Requirements_field $mol_form_field
+					name @ \Требования / Описание функциональности
+					content /
+						<= Requirements $mol_textarea
+							hint @ \Опишите функционал для тестирования...
+							value? <=> requirements? \
+				<= ApiSpec_field $mol_form_field
+					name @ \OpenAPI спецификация (для API тестов)
+					content /
+						<= ApiSpec $mol_textarea
+							hint @ \Вставьте OpenAPI спецификацию в формате JSON или YAML...
+							value? <=> api_spec? \
+				<= BaseUrl_field $mol_form_field
+					name @ \URL продукта
+					content /
+						<= BaseUrl $mol_string
+							hint @ \https://example.com
+							value? <=> base_url? \
+		<= ResultCard $mol_deck
+			items /
+				<= Manual_code_card $mol_card
+					title @ \Ручной тест-кейс
+					content /
+						<= Manual_code $mol_text
+							text <= manual_code \
+				<= Automated_code_card $mol_card
+					title @ \Автоматизированный тест
+					content /
+						<= Automated_code $mol_text
+							text <= automated_code \
+				<= SaveRow $mol_row
+					sub /
+						<= Save_btn $mol_button_major
+							click? <=> save? null
+							sub /
+								<= save_label @ \Сохранить в библиотеку
+						<= Regenerate_btn $mol_button_minor
+							click? <=> regenerate? null
+							sub /
+								<= regenerate_label @ \Перегенерировать

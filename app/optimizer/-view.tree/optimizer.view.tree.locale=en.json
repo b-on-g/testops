@@ -1,0 +1,10 @@
+{
+	"$bog_testops_app_optimizer_analyze_label": "Анализировать",
+	"$bog_testops_app_optimizer_intro_text": "Анализ покрытия, поиск дубликатов и пробелов в тестировании",
+	"$bog_testops_app_optimizer_Coverage_card_title": "Покрытие",
+	"$bog_testops_app_optimizer_Duplicates_card_title": "Дубликаты",
+	"$bog_testops_app_optimizer_Gaps_card_title": "Пробелы",
+	"$bog_testops_app_optimizer_Suggestions_card_title": "Рекомендации",
+	"$bog_testops_app_optimizer_loading_text": "Анализ выполняется...",
+	"$bog_testops_app_optimizer_title": "Оптимизатор тестов"
+}
