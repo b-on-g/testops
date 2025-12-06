@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22  # или 20, если ты на нём
+          node-version: 24  # или 20, если ты на нём
 
       - name: Install mam and pg
         run: |
