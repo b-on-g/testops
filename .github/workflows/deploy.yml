@@ -12,25 +12,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22   # или та, которой пользуешься
+          node-version: 22  # или 20, если ты на нём
 
-      - name: Install pg for crus
+      - name: Install mam and pg
         run: |
-          npm init -y > /dev/null 2>&1
-          npm install pg @types/pg
+          npm init -y
+          npm install github:hyoo-ru/mam pg @types/pg --omit=dev
 
-      - uses: hyoo-ru/mam_build@master2
-        with:
-          package: 'bog/testops'
-          modules: 'app'
+      - name: Build $mol app
+        run: npx mam build bog/testops app
 
-      - uses: hyoo-ru/gh-deploy@v4.4.1
+      - name: Deploy
         if: github.ref == 'refs/heads/master'
+        uses: hyoo-ru/gh-deploy@v4.4.1
         with:
           folder: 'bog/testops/app/-'
