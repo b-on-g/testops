@@ -3,7 +3,7 @@ node_modules/
 package-lock.json
 
 # Build artifacts
-app/-/
+app/-/*
 !app/-/.gitkeep
 
 # OS files
@@ -29,3 +29,8 @@ npm-debug.log*
 # Temporary files
 *.tmp
 *.temp
+
+-*
+node_modules
+.idea
+.DS_Store
