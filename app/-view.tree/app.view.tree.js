@@ -8,6 +8,11 @@
 			(obj.theme_auto) = () => ((this.Theme()));
 			return obj;
 		}
+		Sources(){
+			const obj = new this.$.$mol_link_source();
+			(obj.uri) = () => ("https://github.com/best-online-games/bog/tree/master/testops");
+			return obj;
+		}
 		Theme(){
 			const obj = new this.$.$bog_theme_auto();
 			(obj.theme_light) = () => ("$mol_theme_light");
@@ -49,7 +54,7 @@
 			return (this.$.$mol_locale.text("$bog_testops_app_menu_title"));
 		}
 		menu_tools(){
-			return [(this.Theme_toggle())];
+			return [(this.Theme_toggle()), (this.Sources())];
 		}
 		plugins(){
 			return [(this.Theme())];
@@ -66,6 +71,7 @@
 	};
 	($mol_mem(($.$bog_testops_app.prototype), "Realm"));
 	($mol_mem(($.$bog_testops_app.prototype), "Theme_toggle"));
+	($mol_mem(($.$bog_testops_app.prototype), "Sources"));
 	($mol_mem(($.$bog_testops_app.prototype), "Theme"));
 	($mol_mem(($.$bog_testops_app.prototype), "Generator"));
 	($mol_mem(($.$bog_testops_app.prototype), "Library"));

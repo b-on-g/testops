@@ -77,7 +77,5 @@ $bog_testops_app_library_row $mol_row
 					click? <=> view? null
 					sub /
 						<= view_label @ \Просмотр
-				<= Delete_btn $mol_button_minor
-					click? <=> delete? null
-					sub /
-						<= delete_label @ \Удалить
+				<= Keep_checkbox $mol_check_box
+					checked? <=> keep? true

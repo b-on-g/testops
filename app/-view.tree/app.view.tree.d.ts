@@ -5,17 +5,22 @@ declare namespace $ {
 		,
 		ReturnType< $bog_theme_toggle['theme_auto'] >
 	>
-	type $bog_theme_auto__theme_light_bog_testops_app_2 = $mol_type_enforce<
+	type $mol_link_source__uri_bog_testops_app_2 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_link_source['uri'] >
+	>
+	type $bog_theme_auto__theme_light_bog_testops_app_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $bog_theme_auto['theme_light'] >
 	>
-	type $bog_theme_auto__theme_dark_bog_testops_app_3 = $mol_type_enforce<
+	type $bog_theme_auto__theme_dark_bog_testops_app_4 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $bog_theme_auto['theme_dark'] >
 	>
-	type $mol_image__uri_bog_testops_app_4 = $mol_type_enforce<
+	type $mol_image__uri_bog_testops_app_5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_image['uri'] >
@@ -23,6 +28,7 @@ declare namespace $ {
 	export class $bog_testops_app extends $mol_book2_catalog {
 		Realm( ): $hyoo_crus_glob
 		Theme_toggle( ): $bog_theme_toggle
+		Sources( ): $mol_link_source
 		Theme( ): $bog_theme_auto
 		Generator( ): $bog_testops_app_generator
 		Library( ): $bog_testops_app_library

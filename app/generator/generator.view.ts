@@ -1,68 +1,66 @@
 namespace $.$$ {
-
 	export class $bog_testops_app_generator extends $.$bog_testops_app_generator {
-
-		@ $mol_mem
+		@$mol_mem
 		realm() {
 			return this.$.$hyoo_crus_glob
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		profile() {
 			return this.realm().home().hall_by($bog_testops_profile, {})
 		}
 
 		// --- Форма ввода ---
 
-		@ $mol_mem
+		@$mol_mem
 		product(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		test_type(next?: string) {
 			return next ?? 'manual'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		priority(next?: string) {
 			return next ?? 'NORMAL'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		requirements(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		api_spec(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		base_url(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		is_api_test() {
 			return this.test_type() === 'api'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		can_generate() {
 			const req = this.requirements().trim()
 			const type = this.test_type()
-			
+
 			if (!req) return false
 			if (type === 'api' && !this.api_spec().trim()) return false
-			
+
 			return true
 		}
 
 		// --- Генерация ---
 
-		@ $mol_mem
+		@$mol_mem
 		generated_data(reset?: null): {
 			manual_code: string
 			automated_code: string
@@ -70,35 +68,119 @@ namespace $.$$ {
 		} | null {
 			if (reset === null) return null
 
-			// TODO: Интеграция с Cloud.ru Evolution API
-			// Пока используем заглушку
-			
 			const type = this.test_type()
 			const priority = this.priority()
 			const product = this.product()
 			const requirements = this.requirements()
 
-			const manual_code = this.generate_manual_testcase_stub(
-				type, priority, product, requirements
-			)
+			// Fallback к заглушкам для демо-режима
+			const manual_code = this.generate_manual_testcase_stub(type, priority, product, requirements)
 
-			const automated_code = this.generate_automated_test_stub(
-				type, product, requirements
-			)
+			const automated_code = this.generate_automated_test_stub(type, product, requirements)
 
 			return {
 				manual_code,
 				automated_code,
-				title: `Test ${product} - ${requirements.slice(0, 50)}...`
+				title: `Test ${product} - ${requirements.slice(0, 50)}...`,
 			}
 		}
 
-		generate_manual_testcase_stub(
-			type: string, 
-			priority: string, 
-			product: string, 
-			requirements: string
-		): string {
+		@$mol_mem
+		settings() {
+			return this.realm().home().hall_by($bog_testops_settings, {})
+		}
+
+		async generate_with_ai(): Promise<{ manual_code: string; automated_code: string } | null> {
+			const apiKey = this.settings()?.EvolutionApiKey(null)?.val()
+			const model = this.settings()?.EvolutionModel(null)?.val() || 'claude-3-5-sonnet'
+
+			if (!apiKey) {
+				this.$.$mol_log3_rise({
+					place: this,
+					message: 'API ключ не настроен',
+					hint: 'Перейдите в Настройки и укажите API ключ Cloud.ru Evolution',
+				})
+				return null
+			}
+
+			const type = this.test_type()
+			const priority = this.priority()
+			const product = this.product()
+			const requirements = this.requirements()
+			const apiSpec = this.api_spec()
+			const baseUrl = this.base_url()
+
+			const prompt = `Ты - эксперт по автоматизации тестирования. Генерируй тест-кейсы в формате Allure TestOps as Code (Python).
+
+Параметры:
+- Продукт: ${product}
+- Тип теста: ${type}
+- Приоритет: ${priority}
+- Требования: ${requirements}
+${apiSpec ? `\n- OpenAPI спецификация:\n${apiSpec}` : ''}
+${baseUrl ? `\n- Base URL: ${baseUrl}` : ''}
+
+Сгенерируй ДВА тест-кейса в формате JSON:
+{
+  "manual": "код ручного тест-кейса с @allure.manual декоратором",
+  "automated": "код автоматизированного теста (pytest + ${type === 'api' ? 'requests' : 'playwright'})"
+}
+
+Требования:
+- Используй паттерн AAA (Arrange, Act, Assert)
+- Добавь все необходимые Allure декораторы
+- Для API тестов используй requests
+- Для UI тестов используй playwright
+- Код должен быть готов к запуску`
+
+			try {
+				const response = await fetch('https://api.aicloud.sbercloud.ru/public/v2/chat/completions', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${apiKey}`,
+					},
+					body: JSON.stringify({
+						model: model,
+						messages: [{ role: 'user', content: prompt }],
+						max_tokens: 2000,
+						temperature: 0.7,
+					}),
+				})
+
+				if (!response.ok) {
+					throw new Error(`API ошибка: ${response.status}`)
+				}
+
+				const data = await response.json()
+				const content = data.choices?.[0]?.message?.content
+
+				if (!content) {
+					throw new Error('Пустой ответ от API')
+				}
+
+				// Парсим JSON из ответа
+				const jsonMatch = content.match(/\{[\s\S]*"manual"[\s\S]*"automated"[\s\S]*\}/)
+				if (jsonMatch) {
+					const result = JSON.parse(jsonMatch[0])
+					return {
+						manual_code: result.manual,
+						automated_code: result.automated,
+					}
+				}
+
+				// Если JSON не распарсился, возвращаем как есть
+				return {
+					manual_code: content,
+					automated_code: content,
+				}
+			} catch (error) {
+				this.$.$mol_fail_hidden(`Ошибка генерации: ${error}`)
+				return null
+			}
+		}
+
+		generate_manual_testcase_stub(type: string, priority: string, product: string, requirements: string): string {
 			return `@allure.manual
 @allure.label("owner", "qa-team")
 @allure.feature("${product}")
@@ -124,11 +206,7 @@ class Test${product.charAt(0).toUpperCase() + product.slice(1)}:
 `
 		}
 
-		generate_automated_test_stub(
-			type: string,
-			product: string,
-			requirements: string
-		): string {
+		generate_automated_test_stub(type: string, product: string, requirements: string): string {
 			if (type === 'api') {
 				return `import pytest
 import requests
@@ -167,52 +245,52 @@ class TestUI${product.charAt(0).toUpperCase() + product.slice(1)}:
 			}
 		}
 
-		@ $mol_action
+		@$mol_action
 		generate() {
 			// Сбросить предыдущий результат и запустить генерацию
 			this.generated_data(null)
 			return null
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		has_result() {
 			return this.generated_data() !== null
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		manual_code() {
 			return this.generated_data()?.manual_code ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		automated_code() {
 			return this.generated_data()?.automated_code ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		result_title() {
 			const data = this.generated_data()
 			return data ? `Сгенерированные тест-кейсы: ${data.title}` : 'Сгенерированные тест-кейсы'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		result_tab(next?: string) {
 			return next ?? 'manual'
 		}
 
-		@ $mol_action
+		@$mol_action
 		copy_manual() {
 			navigator.clipboard.writeText(this.manual_code())
 			return null
 		}
 
-		@ $mol_action
+		@$mol_action
 		copy_automated() {
 			navigator.clipboard.writeText(this.automated_code())
 			return null
 		}
 
-		@ $mol_action
+		@$mol_action
 		save() {
 			const data = this.generated_data()
 			if (!data) return null
@@ -245,7 +323,7 @@ class TestUI${product.charAt(0).toUpperCase() + product.slice(1)}:
 			return null
 		}
 
-		@ $mol_action
+		@$mol_action
 		regenerate() {
 			this.generate()
 			return null

@@ -176,17 +176,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__click_bog_testops_app_library_row_5 = $mol_type_enforce<
-		ReturnType< $bog_testops_app_library_row['delete'] >
+	type $mol_check_box__checked_bog_testops_app_library_row_5 = $mol_type_enforce<
+		ReturnType< $bog_testops_app_library_row['keep'] >
 		,
-		ReturnType< $mol_button_minor['click'] >
+		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_button_minor__sub_bog_testops_app_library_row_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_row__sub_bog_testops_app_library_row_7 = $mol_type_enforce<
+	type $mol_row__sub_bog_testops_app_library_row_6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
@@ -203,9 +198,8 @@ declare namespace $ {
 		view( next?: any ): any
 		view_label( ): string
 		View_btn( ): $mol_button_minor
-		delete( next?: any ): any
-		delete_label( ): string
-		Delete_btn( ): $mol_button_minor
+		keep( next?: boolean ): boolean
+		Keep_checkbox( ): $mol_check_box
 		Actions( ): $mol_row
 		attr( ): ({ 
 			'mol_theme': string,

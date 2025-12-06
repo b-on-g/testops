@@ -1,18 +1,16 @@
 namespace $.$$ {
-
 	export class $bog_testops_app_library extends $.$bog_testops_app_library {
-
-		@ $mol_mem
+		@$mol_mem
 		realm() {
 			return this.$.$hyoo_crus_glob
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		profile() {
 			return this.realm().home().hall_by($bog_testops_profile, {})
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		testcases_all() {
 			const list = this.profile()?.TestCases()?.remote_list() ?? []
 			return list as readonly $bog_testops_testcase[]
@@ -20,27 +18,27 @@ namespace $.$$ {
 
 		// --- Фильтры ---
 
-		@ $mol_mem
+		@$mol_mem
 		search(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		type_filter(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		priority_filter(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		status_filter(next?: string) {
 			return next ?? ''
 		}
 
-		@ $mol_action
+		@$mol_action
 		filters_reset() {
 			this.search('')
 			this.type_filter('')
@@ -49,7 +47,7 @@ namespace $.$$ {
 			return null
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		testcases_filtered() {
 			const q = this.search().trim().toLowerCase()
 			const type = this.type_filter()
@@ -76,19 +74,21 @@ namespace $.$$ {
 
 		// --- Пагинация ---
 
-		page_size() { return 20 }
+		page_size() {
+			return 20
+		}
 
-		@ $mol_mem
+		@$mol_mem
 		page(next?: number) {
 			return next ?? 0
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		page_count() {
 			return Math.ceil(this.testcases_filtered().length / this.page_size()) || 1
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		testcase_ids_page() {
 			const list = this.testcases_filtered()
 			const page = Math.min(this.page(), this.page_count() - 1)
@@ -98,42 +98,42 @@ namespace $.$$ {
 			return list.slice(from, to).map(tc => tc.ref().description!)
 		}
 
-		@ $mol_mem_key
+		@$mol_mem_key
 		testcase_row(id: string) {
-			const row = new this.$.$bog_testops_app_library_row
+			const row = new this.$.$bog_testops_app_library_row()
 			;(row as any).$ = this.$
 			row.testcase_id(id)
 			return row
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		testcase_rows() {
 			return this.testcase_ids_page().map(id => this.testcase_row(id))
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		page_has_prev() {
 			return this.page() > 0
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		page_has_next() {
 			return this.page() < this.page_count() - 1
 		}
 
-		@ $mol_action
+		@$mol_action
 		page_prev() {
 			if (this.page_has_prev()) this.page(this.page() - 1)
 			return null
 		}
 
-		@ $mol_action
+		@$mol_action
 		page_next() {
 			if (this.page_has_next()) this.page(this.page() + 1)
 			return null
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		PageInfo() {
 			const total = this.testcases_filtered().length
 			const page = this.page() + 1
@@ -143,7 +143,7 @@ namespace $.$$ {
 
 		// --- Статистика ---
 
-		@ $mol_mem
+		@$mol_mem
 		stats_text() {
 			const all = this.testcases_all()
 			const manual = all.filter(tc => tc.TestType(null)?.val() === 'manual').length
@@ -155,7 +155,6 @@ namespace $.$$ {
 	}
 
 	export class $bog_testops_app_library_row extends $.$bog_testops_app_library_row {
-
 		private _testcase_id = ''
 
 		testcase_id(next?: string) {
@@ -163,56 +162,83 @@ namespace $.$$ {
 			return this._testcase_id
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		testcase() {
 			const id = this.testcase_id()
 			const ref = $hyoo_crus_ref(id)
 			return this.$.$hyoo_crus_glob.Node(ref, $bog_testops_testcase)
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		title_text() {
 			return this.testcase().Title(null)?.val() ?? '—'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		Feature() {
 			return this.testcase().Feature(null)?.val() ?? '—'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		Priority() {
 			return this.testcase().Priority(null)?.val() ?? '—'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		TestType() {
 			return this.testcase().TestType(null)?.val() ?? '—'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		Status() {
 			return this.testcase().Status(null)?.val() ?? '—'
 		}
 
-		@ $mol_mem
+		@$mol_mem
 		UpdatedAt() {
 			const dt = this.testcase().UpdatedAt(null)?.val()
 			return dt ? dt.slice(0, 10) : '—'
 		}
 
-		@ $mol_action
+		@$mol_action
 		view() {
-			// TODO: открыть детальный просмотр
-			console.log('View testcase:', this.testcase_id())
+			const tc = this.testcase()
+			const title = tc.Title(null)?.val() || 'Untitled'
+			const code = tc.PythonCode(null)?.text() || ''
+			const description = tc.Description(null)?.text() || ''
+
+			const info = `Тест-кейс: ${title}
+
+Описание:
+${description}
+
+Код:
+${code}
+`
+			this.$.$mol_log3_rise({
+				place: this,
+				message: title,
+				hint: info,
+			})
+
 			return null
 		}
 
-		@ $mol_action
-		delete() {
-			// TODO: удалить тест-кейс
-			console.log('Delete testcase:', this.testcase_id())
-			return null
+		@$mol_mem
+		keep(next?: boolean) {
+			const tc = this.testcase()
+			const realm = this.$.$hyoo_crus_glob
+			const profile = realm.home().hall_by($bog_testops_profile, {})
+			const testcases = profile?.TestCases()
+
+			if (!testcases) return true
+
+			if (next !== undefined) {
+				testcases.has(tc.ref(), next)
+				return next
+			}
+
+			return testcases.has(tc.ref())
 		}
 	}
 }

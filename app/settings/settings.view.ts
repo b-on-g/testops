@@ -32,8 +32,42 @@ namespace $.$$ {
 
 		@$mol_action
 		async api_test() {
-			// TODO: реальная проверка API
-			console.log('Testing API connection...')
+			const key = this.api_key()
+			const model = this.api_model()
+
+			if (!key) {
+				this.$.$mol_fail_hidden('API ключ не указан')
+				return null
+			}
+
+			try {
+				const response = await fetch('https://api.aicloud.sbercloud.ru/public/v2/chat/completions', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${key}`,
+					},
+					body: JSON.stringify({
+						model: model,
+						messages: [{ role: 'user', content: 'test' }],
+						max_tokens: 10,
+					}),
+				})
+
+				if (response.ok) {
+					this.$.$mol_log3_rise({
+						place: this,
+						message: 'API подключение успешно',
+						hint: 'Cloud.ru Evolution API работает',
+					})
+				} else {
+					const error = await response.text()
+					this.$.$mol_fail_hidden(`API ошибка: ${response.status} ${error}`)
+				}
+			} catch (error) {
+				this.$.$mol_fail_hidden(`Ошибка подключения: ${error}`)
+			}
+
 			return null
 		}
 
@@ -68,8 +102,38 @@ namespace $.$$ {
 
 		@$mol_action
 		async gitlab_test() {
-			// TODO: реальная проверка GitLab
-			console.log('Testing GitLab connection...')
+			const token = this.gitlab_token()
+			const url = this.gitlab_url()
+			const projectId = this.gitlab_project()
+
+			if (!token || !url || !projectId) {
+				this.$.$mol_fail_hidden('Заполните все поля GitLab')
+				return null
+			}
+
+			try {
+				const apiUrl = `${url}/api/v4/projects/${encodeURIComponent(projectId)}`
+				const response = await fetch(apiUrl, {
+					headers: {
+						'PRIVATE-TOKEN': token,
+					},
+				})
+
+				if (response.ok) {
+					const project = await response.json()
+					this.$.$mol_log3_rise({
+						place: this,
+						message: 'GitLab подключение успешно',
+						hint: `Проект: ${project.name_with_namespace || project.name}`,
+					})
+				} else {
+					const error = await response.text()
+					this.$.$mol_fail_hidden(`GitLab ошибка: ${response.status} ${error}`)
+				}
+			} catch (error) {
+				this.$.$mol_fail_hidden(`Ошибка подключения: ${error}`)
+			}
+
 			return null
 		}
 

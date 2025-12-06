@@ -223,22 +223,18 @@
 			(obj.sub) = () => ([(this.view_label())]);
 			return obj;
 		}
-		delete(next){
+		keep(next){
 			if(next !== undefined) return next;
-			return null;
+			return true;
 		}
-		delete_label(){
-			return (this.$.$mol_locale.text("$bog_testops_app_library_row_delete_label"));
-		}
-		Delete_btn(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.delete(next)));
-			(obj.sub) = () => ([(this.delete_label())]);
+		Keep_checkbox(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.keep(next)));
 			return obj;
 		}
 		Actions(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.View_btn()), (this.Delete_btn())]);
+			(obj.sub) = () => ([(this.View_btn()), (this.Keep_checkbox())]);
 			return obj;
 		}
 		attr(){
@@ -259,8 +255,8 @@
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "Title"));
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "view"));
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "View_btn"));
-	($mol_mem(($.$bog_testops_app_library_row.prototype), "delete"));
-	($mol_mem(($.$bog_testops_app_library_row.prototype), "Delete_btn"));
+	($mol_mem(($.$bog_testops_app_library_row.prototype), "keep"));
+	($mol_mem(($.$bog_testops_app_library_row.prototype), "Keep_checkbox"));
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "Actions"));
 
 //# sourceMappingURL=library.view.tree.js.map
