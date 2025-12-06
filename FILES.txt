@@ -1,0 +1,77 @@
+TestOps Copilot - Список файлов проекта
+========================================
+
+Документация (корневая директория):
+  README.md              - Полная документация проекта
+  SUMMARY.md             - Краткое техническое резюме
+  QUICKSTART.md          - Быстрый старт и примеры
+  DEPLOYMENT.md          - Руководство по деплою
+  PROJECT_STATUS.md      - Статус выполнения проекта
+  FILES.txt              - Этот файл
+  .gitignore             - Git исключения
+
+GitHub конфигурация (.github/):
+  README.md              - Описание GitHub конфигурации
+  FUNDING.yml            - Информация о спонсорстве
+  pull_request_template.md - Шаблон PR
+  
+  ISSUE_TEMPLATE/
+    bug_report.md        - Шаблон для багов
+    feature_request.md   - Шаблон для фич
+  
+  workflows/
+    ci.yml               - Continuous Integration
+    deploy.yml           - Автоматический деплой
+    release.yml          - Создание релизов
+
+Приложение (app/):
+  index.html             - Точка входа HTML
+  app.meta.tree          - Метаданные ($mol offline/install)
+  app.view.tree          - Главный компонент (book2_catalog)
+  app.view.ts            - Логика приложения
+  app.view.css.ts        - Стили приложения
+  testcase.model.ts      - CRUS модели данных
+  
+  generator/
+    generator.view.tree  - Разметка генератора
+    generator.view.ts    - Логика генератора
+    generator.view.css.ts - Стили генератора
+  
+  library/
+    library.view.tree    - Разметка библиотеки
+    library.view.ts      - Логика библиотеки
+    library.view.css.ts  - Стили библиотеки
+  
+  optimizer/
+    optimizer.view.tree  - Разметка оптимизатора
+    optimizer.view.ts    - Логика оптимизатора
+    optimizer.view.css.ts - Стили оптимизатора
+  
+  validator/
+    validator.view.tree  - Разметка валидатора
+    validator.view.ts    - Логика валидатора
+    validator.view.css.ts - Стили валидатора
+  
+  settings/
+    settings.view.tree   - Разметка настроек
+    settings.view.ts     - Логика настроек
+    settings.view.css.ts - Стили настроек
+  
+  -/ (build artifacts - генерируются автоматически)
+    web.js               - Скомпилированный JavaScript
+    web.css              - Скомпилированный CSS
+    web.js.map           - Source map
+    web.css.map          - CSS source map
+    test.html            - Тестовая страница
+    web.audit.js         - TypeScript audit результаты
+
+Ресурсы (assets/):
+  favicon.ico            - Иконка приложения
+
+Всего:
+  - Файлов кода: ~25
+  - Документации: 8
+  - GitHub конфигурация: 8
+  - Общий размер: ~150 KB (без node_modules)
+
+Сгенерировано: 2025-12-06
