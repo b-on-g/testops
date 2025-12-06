@@ -19161,32 +19161,6 @@ class TestUI${product.charAt(0).toUpperCase() + product.slice(1)}:
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($bog_testops_app_generator, {
-            Form: {
-                gap: $mol_gap.block,
-            },
-            ResultCard: {
-                margin: {
-                    top: $mol_gap.block,
-                },
-            },
-            SaveRow: {
-                justifyContent: 'flex-end',
-                gap: $mol_gap.text,
-                margin: {
-                    top: $mol_gap.block,
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
 		path(){
 			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
@@ -19450,6 +19424,7 @@ var $;
 		Keep_checkbox(){
 			const obj = new this.$.$mol_check_box();
 			(obj.checked) = (next) => ((this.keep(next)));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_testops_app_library_row_Keep_checkbox_hint")));
 			return obj;
 		}
 		Actions(){
@@ -19751,47 +19726,6 @@ ${code}
             $mol_mem
         ], $bog_testops_app_library_row.prototype, "keep", null);
         $$.$bog_testops_app_library_row = $bog_testops_app_library_row;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($bog_testops_app_library, {
-            Filters: {
-                gap: $mol_gap.text,
-                flexWrap: 'wrap',
-                padding: $mol_gap.block,
-            },
-            TableCard: {
-                margin: {
-                    top: $mol_gap.block,
-                },
-            },
-            Pagination: {
-                justifyContent: 'space-between',
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-            },
-        });
-        $mol_style_define($bog_testops_app_library_row, {
-            gap: $mol_gap.text,
-            padding: $mol_gap.text,
-            borderBottom: `1px solid ${$mol_theme.line}`,
-            Title: {
-                flex: {
-                    grow: 2,
-                },
-            },
-            Actions: {
-                gap: $mol_gap.text,
-            },
-        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -20134,34 +20068,6 @@ ${manualCount > automatedCount
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($bog_testops_app_optimizer, {
-            Intro: {
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: '8px',
-            },
-            ResultsCard: {
-                margin: {
-                    top: $mol_gap.block,
-                },
-            },
-            LoadingIndicator: {
-                padding: $mol_gap.block,
-                textAlign: 'center',
-                fontSize: '1.2rem',
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$bog_testops_app_validator) = class $bog_testops_app_validator extends ($.$mol_page) {
 		validate(next){
 			if(next !== undefined) return next;
@@ -20462,37 +20368,6 @@ ${passed < total
             $mol_mem
         ], $bog_testops_app_validator.prototype, "all_validation_report", null);
         $$.$bog_testops_app_validator = $bog_testops_app_validator;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($bog_testops_app_validator, {
-            Intro: {
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: '8px',
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-            InputCard: {
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-            ResultsCard: {
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -21136,39 +21011,6 @@ var $;
             $mol_action
         ], $bog_testops_app_settings.prototype, "reset", null);
         $$.$bog_testops_app_settings = $bog_testops_app_settings;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($bog_testops_app_settings, {
-            ApiCard: {
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-            GitlabCard: {
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-            AllureCard: {
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-            SaveRow: {
-                justifyContent: 'flex-end',
-                gap: $mol_gap.text,
-                margin: {
-                    top: $mol_gap.block,
-                },
-            },
-        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 

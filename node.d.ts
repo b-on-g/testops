@@ -8735,9 +8735,6 @@ declare namespace $.$$ {
     }
 }
 
-declare namespace $.$$ {
-}
-
 declare namespace $ {
 
 	export class $mol_icon_tick extends $mol_icon {
@@ -8942,7 +8939,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_row__sub_bog_testops_app_library_row_6 = $mol_type_enforce<
+	type $mol_check_box__hint_bog_testops_app_library_row_6 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_check_box['hint'] >
+	>
+	type $mol_row__sub_bog_testops_app_library_row_7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
@@ -9008,9 +9010,6 @@ declare namespace $.$$ {
         view(): null;
         keep(next?: boolean): boolean;
     }
-}
-
-declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -9155,9 +9154,6 @@ declare namespace $.$$ {
     }
 }
 
-declare namespace $.$$ {
-}
-
 declare namespace $ {
 
 	type $mol_button_major__click_bog_testops_app_validator_1 = $mol_type_enforce<
@@ -9283,9 +9279,6 @@ declare namespace $.$$ {
         validation_report(): string;
         all_validation_report(): string;
     }
-}
-
-declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -9954,9 +9947,6 @@ declare namespace $.$$ {
         save(): null;
         reset(): null;
     }
-}
-
-declare namespace $.$$ {
 }
 
 declare namespace $ {

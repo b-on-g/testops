@@ -22,6 +22,7 @@
 	"$bog_testops_app_library_next_label": "Next",
 	"$bog_testops_app_library_prev_label": "Previous",
 	"$bog_testops_app_library_reset_label": "Reset",
+	"$bog_testops_app_library_row_Keep_checkbox_hint": "Удалить",
 	"$bog_testops_app_library_row_view_label": "Просмотр",
 	"$bog_testops_app_library_title": "Library",
 	"$bog_testops_app_library_view_label": "View",
