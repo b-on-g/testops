@@ -1,6 +1,13 @@
 $bog_testops_app_settings $mol_page
 	title @ \Настройки
 	body /
+		<= Language_labeler $mol_labeler
+			title @ \Язык интерфейса
+			content /
+				<= Language_select $mol_locale_select
+					dictionary *
+						ru \Русский
+						en \English
 		<= ApiCard $mol_card
 			title @ \Cloud.ru Evolution API
 			content /

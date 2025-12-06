@@ -1,4 +1,5 @@
 {
+	"$bog_testops_app_settings_Language_labeler_title": "Язык интерфейса",
 	"$bog_testops_app_settings_ApiKey_hint": "Введите API ключ Cloud.ru Evolution",
 	"$bog_testops_app_settings_ApiKey_field_name": "API Ключ",
 	"$bog_testops_app_settings_ApiModel_hint": "Выберите модель",

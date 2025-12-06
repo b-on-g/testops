@@ -1,4 +1,15 @@
 	($.$bog_testops_app_settings) = class $bog_testops_app_settings extends ($.$mol_page) {
+		Language_select(){
+			const obj = new this.$.$mol_locale_select();
+			(obj.dictionary) = () => ({"ru": "Русский", "en": "English"});
+			return obj;
+		}
+		Language_labeler(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_testops_app_settings_Language_labeler_title")));
+			(obj.content) = () => ([(this.Language_select())]);
+			return obj;
+		}
 		api_key(next){
 			if(next !== undefined) return next;
 			return "";
@@ -189,6 +200,7 @@
 		}
 		body(){
 			return [
+				(this.Language_labeler()), 
 				(this.ApiCard()), 
 				(this.GitlabCard()), 
 				(this.AllureCard()), 
@@ -196,6 +208,8 @@
 			];
 		}
 	};
+	($mol_mem(($.$bog_testops_app_settings.prototype), "Language_select"));
+	($mol_mem(($.$bog_testops_app_settings.prototype), "Language_labeler"));
 	($mol_mem(($.$bog_testops_app_settings.prototype), "api_key"));
 	($mol_mem(($.$bog_testops_app_settings.prototype), "ApiKey"));
 	($mol_mem(($.$bog_testops_app_settings.prototype), "ApiKey_field"));
