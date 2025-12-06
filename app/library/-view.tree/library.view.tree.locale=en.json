@@ -7,5 +7,6 @@
 	"$bog_testops_app_library_prev_label": "Назад",
 	"$bog_testops_app_library_next_label": "Вперёд",
 	"$bog_testops_app_library_title": "Библиотека тест-кейсов",
-	"$bog_testops_app_library_row_view_label": "Просмотр"
+	"$bog_testops_app_library_row_view_label": "Просмотр",
+	"$bog_testops_app_library_row_Keep_checkbox_hint": "Удалить"
 }

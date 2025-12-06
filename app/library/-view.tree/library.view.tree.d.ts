@@ -181,7 +181,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_row__sub_bog_testops_app_library_row_6 = $mol_type_enforce<
+	type $mol_check_box__hint_bog_testops_app_library_row_6 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_check_box['hint'] >
+	>
+	type $mol_row__sub_bog_testops_app_library_row_7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >

@@ -230,6 +230,7 @@
 		Keep_checkbox(){
 			const obj = new this.$.$mol_check_box();
 			(obj.checked) = (next) => ((this.keep(next)));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_testops_app_library_row_Keep_checkbox_hint")));
 			return obj;
 		}
 		Actions(){

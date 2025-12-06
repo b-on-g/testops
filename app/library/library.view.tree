@@ -79,3 +79,4 @@ $bog_testops_app_library_row $mol_row
 						<= view_label @ \Просмотр
 				<= Keep_checkbox $mol_check_box
 					checked? <=> keep? true
+					hint @ \Удалить
