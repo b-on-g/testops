@@ -155,6 +155,11 @@ var $node = new Proxy({ require }, {
                     $$.$mol_fail_hidden(e);
                 $$.$mol_fail_log(e);
             }
+            const mam_node_modules = target.require('node:path').join(process.cwd(), 'node_modules');
+            if (!process.env.NODE_PATH?.includes(mam_node_modules)) {
+                process.env.NODE_PATH = `${mam_node_modules}${process.env.NODE_PATH ? `:${process.env.NODE_PATH}` : ''}`;
+                target.require('node:module').Module._initPaths();
+            }
         }
         return target.require(name);
     },
@@ -14637,6 +14642,47 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_icon_script) = class $mol_icon_script extends ($.$mol_icon) {
+		path(){
+			return "M17.8,20C17.4,21.2 16.3,22 15,22H5C3.3,22 2,20.7 2,19V18H5L14.2,18C14.6,19.2 15.7,20 17,20H17.8M19,2H8C6.3,2 5,3.3 5,5V16H16V17C16,17.6 16.4,18 17,18H18V5C18,4.4 18.4,4 19,4C19.6,4 20,4.4 20,5V6H22V5C22,3.3 20.7,2 19,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_script_text) = class $mol_icon_script_text extends ($.$mol_icon) {
+		path(){
+			return "M17.8,20C17.4,21.2 16.3,22 15,22H5C3.3,22 2,20.7 2,19V18H5L14.2,18C14.6,19.2 15.7,20 17,20H17.8M19,2C20.7,2 22,3.3 22,5V6H20V5C20,4.4 19.6,4 19,4C18.4,4 18,4.4 18,5V18H17C16.4,18 16,17.6 16,17V16H5V5C5,3.3 6.3,2 8,2H19M8,6V8H15V6H8M8,10V12H14V10H8Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_link_source) = class $mol_link_source extends ($.$mol_link) {
+		Icon(){
+			const obj = new this.$.$mol_icon_script_text();
+			return obj;
+		}
+		hint(){
+			return (this.$.$mol_locale.text("$mol_link_source_hint"));
+		}
+		sub(){
+			return [(this.Icon())];
+		}
+	};
+	($mol_mem(($.$mol_link_source.prototype), "Icon"));
+
+
+;
+"use strict";
+
+;
 	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
 		theme(){
 			return "$mol_theme_base";
@@ -18892,8 +18938,90 @@ var $;
                 return {
                     manual_code,
                     automated_code,
-                    title: `Test ${product} - ${requirements.slice(0, 50)}...`
+                    title: `Test ${product} - ${requirements.slice(0, 50)}...`,
                 };
+            }
+            settings() {
+                return this.realm().home().hall_by($bog_testops_settings, {});
+            }
+            async generate_with_ai() {
+                const apiKey = this.settings()?.EvolutionApiKey(null)?.val();
+                const model = this.settings()?.EvolutionModel(null)?.val() || 'claude-3-5-sonnet';
+                if (!apiKey) {
+                    this.$.$mol_log3_rise({
+                        place: this,
+                        message: 'API ключ не настроен',
+                        hint: 'Перейдите в Настройки и укажите API ключ Cloud.ru Evolution',
+                    });
+                    return null;
+                }
+                const type = this.test_type();
+                const priority = this.priority();
+                const product = this.product();
+                const requirements = this.requirements();
+                const apiSpec = this.api_spec();
+                const baseUrl = this.base_url();
+                const prompt = `Ты - эксперт по автоматизации тестирования. Генерируй тест-кейсы в формате Allure TestOps as Code (Python).
+
+Параметры:
+- Продукт: ${product}
+- Тип теста: ${type}
+- Приоритет: ${priority}
+- Требования: ${requirements}
+${apiSpec ? `\n- OpenAPI спецификация:\n${apiSpec}` : ''}
+${baseUrl ? `\n- Base URL: ${baseUrl}` : ''}
+
+Сгенерируй ДВА тест-кейса в формате JSON:
+{
+  "manual": "код ручного тест-кейса с @allure.manual декоратором",
+  "automated": "код автоматизированного теста (pytest + ${type === 'api' ? 'requests' : 'playwright'})"
+}
+
+Требования:
+- Используй паттерн AAA (Arrange, Act, Assert)
+- Добавь все необходимые Allure декораторы
+- Для API тестов используй requests
+- Для UI тестов используй playwright
+- Код должен быть готов к запуску`;
+                try {
+                    const response = await fetch('https://api.aicloud.sbercloud.ru/public/v2/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${apiKey}`,
+                        },
+                        body: JSON.stringify({
+                            model: model,
+                            messages: [{ role: 'user', content: prompt }],
+                            max_tokens: 2000,
+                            temperature: 0.7,
+                        }),
+                    });
+                    if (!response.ok) {
+                        throw new Error(`API ошибка: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    const content = data.choices?.[0]?.message?.content;
+                    if (!content) {
+                        throw new Error('Пустой ответ от API');
+                    }
+                    const jsonMatch = content.match(/\{[\s\S]*"manual"[\s\S]*"automated"[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const result = JSON.parse(jsonMatch[0]);
+                        return {
+                            manual_code: result.manual,
+                            automated_code: result.automated,
+                        };
+                    }
+                    return {
+                        manual_code: content,
+                        automated_code: content,
+                    };
+                }
+                catch (error) {
+                    this.$.$mol_fail_hidden(`Ошибка генерации: ${error}`);
+                    return null;
+                }
             }
             generate_manual_testcase_stub(type, priority, product, requirements) {
                 return `@allure.manual
@@ -19052,6 +19180,9 @@ class TestUI${product.charAt(0).toUpperCase() + product.slice(1)}:
             $mol_mem
         ], $bog_testops_app_generator.prototype, "generated_data", null);
         __decorate([
+            $mol_mem
+        ], $bog_testops_app_generator.prototype, "settings", null);
+        __decorate([
             $mol_action
         ], $bog_testops_app_generator.prototype, "generate", null);
         __decorate([
@@ -19110,6 +19241,37 @@ var $;
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
+		path(){
+			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
+		Icon(){
+			const obj = new this.$.$mol_icon_tick();
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_check_box.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$bog_testops_app_library) = class $bog_testops_app_library extends ($.$mol_page) {
@@ -19337,22 +19499,18 @@ var $;
 			(obj.sub) = () => ([(this.view_label())]);
 			return obj;
 		}
-		delete(next){
+		keep(next){
 			if(next !== undefined) return next;
-			return null;
+			return true;
 		}
-		delete_label(){
-			return (this.$.$mol_locale.text("$bog_testops_app_library_row_delete_label"));
-		}
-		Delete_btn(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.delete(next)));
-			(obj.sub) = () => ([(this.delete_label())]);
+		Keep_checkbox(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.keep(next)));
 			return obj;
 		}
 		Actions(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.View_btn()), (this.Delete_btn())]);
+			(obj.sub) = () => ([(this.View_btn()), (this.Keep_checkbox())]);
 			return obj;
 		}
 		attr(){
@@ -19373,8 +19531,8 @@ var $;
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "Title"));
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "view"));
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "View_btn"));
-	($mol_mem(($.$bog_testops_app_library_row.prototype), "delete"));
-	($mol_mem(($.$bog_testops_app_library_row.prototype), "Delete_btn"));
+	($mol_mem(($.$bog_testops_app_library_row.prototype), "keep"));
+	($mol_mem(($.$bog_testops_app_library_row.prototype), "Keep_checkbox"));
 	($mol_mem(($.$bog_testops_app_library_row.prototype), "Actions"));
 
 
@@ -19440,7 +19598,9 @@ var $;
                     return true;
                 });
             }
-            page_size() { return 20; }
+            page_size() {
+                return 20;
+            }
             page(next) {
                 return next ?? 0;
             }
@@ -19455,7 +19615,7 @@ var $;
                 return list.slice(from, to).map(tc => tc.ref().description);
             }
             testcase_row(id) {
-                const row = new this.$.$bog_testops_app_library_row;
+                const row = new this.$.$bog_testops_app_library_row();
                 row.$ = this.$;
                 row.testcase_id(id);
                 return row;
@@ -19586,12 +19746,37 @@ var $;
                 return dt ? dt.slice(0, 10) : '—';
             }
             view() {
-                console.log('View testcase:', this.testcase_id());
+                const tc = this.testcase();
+                const title = tc.Title(null)?.val() || 'Untitled';
+                const code = tc.PythonCode(null)?.text() || '';
+                const description = tc.Description(null)?.text() || '';
+                const info = `Тест-кейс: ${title}
+
+Описание:
+${description}
+
+Код:
+${code}
+`;
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: title,
+                    hint: info,
+                });
                 return null;
             }
-            delete() {
-                console.log('Delete testcase:', this.testcase_id());
-                return null;
+            keep(next) {
+                const tc = this.testcase();
+                const realm = this.$.$hyoo_crus_glob;
+                const profile = realm.home().hall_by($bog_testops_profile, {});
+                const testcases = profile?.TestCases();
+                if (!testcases)
+                    return true;
+                if (next !== undefined) {
+                    testcases.has(tc.ref(), next);
+                    return next;
+                }
+                return testcases.has(tc.ref());
             }
         }
         __decorate([
@@ -19619,8 +19804,8 @@ var $;
             $mol_action
         ], $bog_testops_app_library_row.prototype, "view", null);
         __decorate([
-            $mol_action
-        ], $bog_testops_app_library_row.prototype, "delete", null);
+            $mol_mem
+        ], $bog_testops_app_library_row.prototype, "keep", null);
         $$.$bog_testops_app_library_row = $bog_testops_app_library_row;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -19844,10 +20029,10 @@ var $;
 - Всего тест-кейсов: ${total}
 
 ## По типам тестов
-- Ручные: ${byType.manual} (${Math.round(byType.manual / total * 100)}%)
-- UI автотесты: ${byType.ui} (${Math.round(byType.ui / total * 100)}%)
-- API автотесты: ${byType.api} (${Math.round(byType.api / total * 100)}%)
-- Unit-тесты: ${byType.unit} (${Math.round(byType.unit / total * 100)}%)
+- Ручные: ${byType.manual} (${Math.round((byType.manual / total) * 100)}%)
+- UI автотесты: ${byType.ui} (${Math.round((byType.ui / total) * 100)}%)
+- API автотесты: ${byType.api} (${Math.round((byType.api / total) * 100)}%)
+- Unit-тесты: ${byType.unit} (${Math.round((byType.unit / total) * 100)}%)
 
 ## По приоритету
 - Критичные: ${byPriority.CRITICAL}
@@ -19886,7 +20071,9 @@ ${duplicates.length > 0
 
 ## Покрытые продукты/фичи
 ${features.size > 0
-                    ? Array.from(features).map(f => `- ${f}`).join('\n')
+                    ? Array.from(features)
+                        .map(f => `- ${f}`)
+                        .join('\n')
                     : 'Нет покрытых продуктов'}
 
 ## Возможные пробелы
@@ -20857,7 +21044,40 @@ var $;
                 return obj?.EvolutionModel(null)?.val() ?? 'claude-3-5-sonnet';
             }
             async api_test() {
-                console.log('Testing API connection...');
+                const key = this.api_key();
+                const model = this.api_model();
+                if (!key) {
+                    this.$.$mol_fail_hidden('API ключ не указан');
+                    return null;
+                }
+                try {
+                    const response = await fetch('https://api.aicloud.sbercloud.ru/public/v2/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${key}`,
+                        },
+                        body: JSON.stringify({
+                            model: model,
+                            messages: [{ role: 'user', content: 'test' }],
+                            max_tokens: 10,
+                        }),
+                    });
+                    if (response.ok) {
+                        this.$.$mol_log3_rise({
+                            place: this,
+                            message: 'API подключение успешно',
+                            hint: 'Cloud.ru Evolution API работает',
+                        });
+                    }
+                    else {
+                        const error = await response.text();
+                        this.$.$mol_fail_hidden(`API ошибка: ${response.status} ${error}`);
+                    }
+                }
+                catch (error) {
+                    this.$.$mol_fail_hidden(`Ошибка подключения: ${error}`);
+                }
                 return null;
             }
             gitlab_token(next) {
@@ -20882,7 +21102,36 @@ var $;
                 return obj?.GitlabProjectId(null)?.val() ?? '';
             }
             async gitlab_test() {
-                console.log('Testing GitLab connection...');
+                const token = this.gitlab_token();
+                const url = this.gitlab_url();
+                const projectId = this.gitlab_project();
+                if (!token || !url || !projectId) {
+                    this.$.$mol_fail_hidden('Заполните все поля GitLab');
+                    return null;
+                }
+                try {
+                    const apiUrl = `${url}/api/v4/projects/${encodeURIComponent(projectId)}`;
+                    const response = await fetch(apiUrl, {
+                        headers: {
+                            'PRIVATE-TOKEN': token,
+                        },
+                    });
+                    if (response.ok) {
+                        const project = await response.json();
+                        this.$.$mol_log3_rise({
+                            place: this,
+                            message: 'GitLab подключение успешно',
+                            hint: `Проект: ${project.name_with_namespace || project.name}`,
+                        });
+                    }
+                    else {
+                        const error = await response.text();
+                        this.$.$mol_fail_hidden(`GitLab ошибка: ${response.status} ${error}`);
+                    }
+                }
+                catch (error) {
+                    this.$.$mol_fail_hidden(`Ошибка подключения: ${error}`);
+                }
                 return null;
             }
             allure_owner(next) {
@@ -20990,6 +21239,11 @@ var $;
 			(obj.theme_auto) = () => ((this.Theme()));
 			return obj;
 		}
+		Sources(){
+			const obj = new this.$.$mol_link_source();
+			(obj.uri) = () => ("https://github.com/best-online-games/bog/tree/master/testops");
+			return obj;
+		}
 		Theme(){
 			const obj = new this.$.$bog_theme_auto();
 			(obj.theme_light) = () => ("$mol_theme_light");
@@ -21031,7 +21285,7 @@ var $;
 			return (this.$.$mol_locale.text("$bog_testops_app_menu_title"));
 		}
 		menu_tools(){
-			return [(this.Theme_toggle())];
+			return [(this.Theme_toggle()), (this.Sources())];
 		}
 		plugins(){
 			return [(this.Theme())];
@@ -21048,6 +21302,7 @@ var $;
 	};
 	($mol_mem(($.$bog_testops_app.prototype), "Realm"));
 	($mol_mem(($.$bog_testops_app.prototype), "Theme_toggle"));
+	($mol_mem(($.$bog_testops_app.prototype), "Sources"));
 	($mol_mem(($.$bog_testops_app.prototype), "Theme"));
 	($mol_mem(($.$bog_testops_app.prototype), "Generator"));
 	($mol_mem(($.$bog_testops_app.prototype), "Library"));

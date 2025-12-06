@@ -6229,6 +6229,35 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+
+	export class $mol_icon_script extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=script.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_script_text extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=text.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_link_source extends $mol_link {
+		Icon( ): $mol_icon_script_text
+		hint( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=source.view.tree.d.ts.map
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -8736,6 +8765,11 @@ declare namespace $.$$ {
             automated_code: string;
             title: string;
         } | null;
+        settings(): $bog_testops_settings | null;
+        generate_with_ai(): Promise<{
+            manual_code: string;
+            automated_code: string;
+        } | null>;
         generate_manual_testcase_stub(type: string, priority: string, product: string, requirements: string): string;
         generate_automated_test_stub(type: string, product: string, requirements: string): string;
         generate(): null;
@@ -8754,6 +8788,27 @@ declare namespace $.$$ {
 declare namespace $.$$ {
 }
 
+declare namespace $ {
+
+	export class $mol_icon_tick extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=tick.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_check_box extends $mol_check {
+		Icon( ): $mol_icon_tick
+	}
+	
+}
+
+//# sourceMappingURL=box.view.tree.d.ts.map
 declare namespace $ {
 
 	type $mol_view__sub_bog_testops_app_library_1 = $mol_type_enforce<
@@ -8932,17 +8987,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__click_bog_testops_app_library_row_5 = $mol_type_enforce<
-		ReturnType< $bog_testops_app_library_row['delete'] >
+	type $mol_check_box__checked_bog_testops_app_library_row_5 = $mol_type_enforce<
+		ReturnType< $bog_testops_app_library_row['keep'] >
 		,
-		ReturnType< $mol_button_minor['click'] >
+		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_button_minor__sub_bog_testops_app_library_row_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_row__sub_bog_testops_app_library_row_7 = $mol_type_enforce<
+	type $mol_row__sub_bog_testops_app_library_row_6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
@@ -8959,9 +9009,8 @@ declare namespace $ {
 		view( next?: any ): any
 		view_label( ): string
 		View_btn( ): $mol_button_minor
-		delete( next?: any ): any
-		delete_label( ): string
-		Delete_btn( ): $mol_button_minor
+		keep( next?: boolean ): boolean
+		Keep_checkbox( ): $mol_check_box
 		Actions( ): $mol_row
 		attr( ): ({ 
 			'mol_theme': string,
@@ -9007,7 +9056,7 @@ declare namespace $.$$ {
         Status(): string;
         UpdatedAt(): string;
         view(): null;
-        delete(): null;
+        keep(next?: boolean): boolean;
     }
 }
 
@@ -10009,17 +10058,22 @@ declare namespace $ {
 		,
 		ReturnType< $bog_theme_toggle['theme_auto'] >
 	>
-	type $bog_theme_auto__theme_light_bog_testops_app_2 = $mol_type_enforce<
+	type $mol_link_source__uri_bog_testops_app_2 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_link_source['uri'] >
+	>
+	type $bog_theme_auto__theme_light_bog_testops_app_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $bog_theme_auto['theme_light'] >
 	>
-	type $bog_theme_auto__theme_dark_bog_testops_app_3 = $mol_type_enforce<
+	type $bog_theme_auto__theme_dark_bog_testops_app_4 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $bog_theme_auto['theme_dark'] >
 	>
-	type $mol_image__uri_bog_testops_app_4 = $mol_type_enforce<
+	type $mol_image__uri_bog_testops_app_5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_image['uri'] >
@@ -10027,6 +10081,7 @@ declare namespace $ {
 	export class $bog_testops_app extends $mol_book2_catalog {
 		Realm( ): $hyoo_crus_glob
 		Theme_toggle( ): $bog_theme_toggle
+		Sources( ): $mol_link_source
 		Theme( ): $bog_theme_auto
 		Generator( ): $bog_testops_app_generator
 		Library( ): $bog_testops_app_library
