@@ -340,7 +340,6 @@
     "$hyoo_crus_text_tokens"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*",
     "pg": "*"
   }
