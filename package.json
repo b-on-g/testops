@@ -31,7 +31,7 @@
     "$node",
     "$node_internal_check",
     "$node_internal",
-    "$mol_exec",
+    "$node_autoinstall",
     "$mol_run",
     "$mol_error_mix",
     "$mol_error",
@@ -340,6 +340,7 @@
     "$hyoo_crus_text_tokens"
   ],
   "dependencies": {
+    "autoinstall": "*",
     "jsdom": "*",
     "pg": "*"
   }
