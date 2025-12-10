@@ -114,6 +114,7 @@ declare namespace $ {
         static toJSON(): any;
         destructor(): void;
         static destructor(): void;
+        [Symbol.dispose](): void;
         toString(): string;
     }
 }
@@ -974,6 +975,7 @@ declare namespace $ {
         }): number;
         read(): Uint8Array<ArrayBuffer>;
         truncate(size: number): void;
+        flush(): void;
         close(): void;
         destructor(): void;
     }
@@ -990,6 +992,7 @@ declare namespace $ {
         }): number;
         truncate(size: number): void;
         read(): Uint8Array<ArrayBuffer>;
+        flush(): void;
         close(): void;
     }
 }
@@ -3839,6 +3842,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: Parse;
         toString(): any;
@@ -3888,6 +3892,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_bin;
         toString(): any;
@@ -3939,6 +3944,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_bool;
         toString(): any;
@@ -3990,6 +3996,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_int;
         toString(): any;
@@ -4041,6 +4048,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_real;
         toString(): any;
@@ -4092,6 +4100,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_ints;
         toString(): any;
@@ -4143,6 +4152,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_reals;
         toString(): any;
@@ -4198,6 +4208,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_ref;
         toString(): any;
@@ -4249,6 +4260,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_str;
         toString(): any;
@@ -4300,6 +4312,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_time;
         toString(): any;
@@ -4351,6 +4364,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_dur;
         toString(): any;
@@ -4402,6 +4416,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_range;
         toString(): any;
@@ -4453,6 +4468,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_json;
         toString(): any;
@@ -4504,6 +4520,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_jsan;
         toString(): any;
@@ -4555,6 +4572,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_dom;
         toString(): any;
@@ -4606,6 +4624,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_tree;
         toString(): any;
@@ -4669,6 +4688,7 @@ declare namespace $ {
             toString(): string;
             [Symbol.toStringTag]: string;
             [$mol_ambient_ref]: $;
+            [Symbol.dispose](): void;
         };
         Value: Value;
         toString(): any;
@@ -4745,6 +4765,7 @@ declare namespace $ {
             toString(): string;
             [Symbol.toStringTag]: string;
             [$mol_ambient_ref]: $;
+            [Symbol.dispose](): void;
         };
         toString(): any;
         tag: keyof typeof $hyoo_crus_sand_tag;
@@ -4818,6 +4839,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         options: Options;
         toString(): any;
@@ -4862,6 +4884,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: Parse;
         toString(): any;
@@ -4906,6 +4929,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_bin;
         toString(): any;
@@ -4952,6 +4976,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_bool;
         toString(): any;
@@ -4998,6 +5023,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_int;
         toString(): any;
@@ -5044,6 +5070,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_real;
         toString(): any;
@@ -5090,6 +5117,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_ints;
         toString(): any;
@@ -5136,6 +5164,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_reals;
         toString(): any;
@@ -5190,6 +5219,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_ref;
         toString(): any;
@@ -5236,6 +5266,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_str;
         toString(): any;
@@ -5282,6 +5313,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_time;
         toString(): any;
@@ -5328,6 +5360,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_dur;
         toString(): any;
@@ -5374,6 +5407,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_range;
         toString(): any;
@@ -5420,6 +5454,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_json;
         toString(): any;
@@ -5466,6 +5501,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_jsan;
         toString(): any;
@@ -5512,6 +5548,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_dom;
         toString(): any;
@@ -5558,6 +5595,7 @@ declare namespace $ {
         toString(): string;
         [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: $;
+        [Symbol.dispose](): void;
     }) & {
         parse: typeof $hyoo_crus_vary_cast_tree;
         toString(): any;
@@ -5626,6 +5664,7 @@ declare namespace $ {
             toString(): string;
             [Symbol.toStringTag]: string;
             [$mol_ambient_ref]: $;
+            [Symbol.dispose](): void;
         };
         toString(): any;
         Value: typeof $hyoo_crus_dict;
@@ -5711,6 +5750,7 @@ declare namespace $ {
             toString(): string;
             [Symbol.toStringTag]: string;
             [$mol_ambient_ref]: $;
+            [Symbol.dispose](): void;
         } | null;
     }>) & {
         schema: {
@@ -5769,6 +5809,7 @@ declare namespace $ {
                     toString(): string;
                     [Symbol.toStringTag]: string;
                     [$mol_ambient_ref]: $;
+                    [Symbol.dispose](): void;
                 };
                 toString(): any;
                 Value: typeof $hyoo_crus_dict;
@@ -10100,6 +10141,7 @@ declare namespace $.$$ {
             toString(): string;
             [Symbol.toStringTag]: string;
             [$mol_ambient_ref]: $;
+            [Symbol.dispose](): void;
         } | null;
         readonly TestSuites: (auto?: any) => {
             remote_list(next?: readonly $bog_testops_testsuite[] | undefined): readonly $bog_testops_testsuite[];
@@ -10148,6 +10190,7 @@ declare namespace $.$$ {
             toString(): string;
             [Symbol.toStringTag]: string;
             [$mol_ambient_ref]: $;
+            [Symbol.dispose](): void;
         } | null;
     }>) & {
         schema: {
@@ -10201,6 +10244,7 @@ declare namespace $.$$ {
                     toString(): string;
                     [Symbol.toStringTag]: string;
                     [$mol_ambient_ref]: $;
+                    [Symbol.dispose](): void;
                 };
                 Value: Value;
                 toString(): any;
@@ -10261,6 +10305,7 @@ declare namespace $.$$ {
                     toString(): string;
                     [Symbol.toStringTag]: string;
                     [$mol_ambient_ref]: $;
+                    [Symbol.dispose](): void;
                 };
                 Value: Value;
                 toString(): any;
