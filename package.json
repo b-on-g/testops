@@ -284,6 +284,7 @@
     "$mol_select",
     "$mol_pick",
     "$mol_check",
+    "$mol_dom_event",
     "$mol_icon_dots_vertical",
     "$mol_icon_dots",
     "$mol_form_field",
